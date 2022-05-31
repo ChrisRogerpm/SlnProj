@@ -1,0 +1,277 @@
+﻿
+@{
+    ViewBag.Title = "Expediente";
+}
+
+@section header{
+    <div class="page-header page-header-light">
+        <div class="page-header-content header-elements-md-inline">
+            <div class="page-title d-flex">
+                <h4>
+                    <span class="font-weight-semibold"> EXPEDIENTES REGISTRADOS</span>
+                </h4>
+                <a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
+            </div>
+            <div class="header-elements d-none">
+                <div class="d-flex justify-content-center">
+                    <button type="button" class="btn btn-link btn-float text-default" id="btnModalExpediente">
+                        <i class="icon-googleplus5 text-slate-700"></i><span>NUEVO</span>
+                    </button>
+                    <!-- <button type="button" class="btn btn-link btn-float text-default btnBuscar">
+                        <i class="icon-search4 text-slate-700"></i><span>BUSCAR</span>
+                    </button> -->
+
+                </div>
+            </div>
+        </div>
+        <div class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
+            <div class="d-flex">
+                <div class="breadcrumb">
+                    <a href="#" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> INICIO</a>
+                    <a href="#" class="breadcrumb-item"> EXPEDIENTES REGISTRADOS</a>
+                </div>
+                <a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
+            </div>
+
+        </div>
+    </div>
+}
+
+<div class="row">
+    <!-- <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <form id="frmFiltro">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label for=""><b><i class="icon-calendar mr-1"></i>NRO DE EXPEDIENTE:</b></label>
+                                <div class="input-group input-group-sm">
+                                    <div class="input-group input-group-sm">
+                                        <input type="text" class="form-control form-control-sm Fecha" id="nroExpediente" name="nroExpediente">
+                                        <span class="input-group-append">
+                                            <button class="btn btn-light" type="button"><i class="icon-user"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div> -->
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <table id="table" class="table table-bordered table-sm table-striped" style="width:100%"></table>
+            </div>
+        </div>
+    </div>
+    <div id="ModalExpediente" class="modal fade" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="icon-menu7 mr-2"></i> &nbsp;EXPEDIENTE</h5>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form id="frmExpediente" autocomplete="off">
+                        <div class="row">
+                            <input type="hidden" id="id" name="id">
+                            <div class="col-lg-12">
+                                <legend class="text-uppercase font-size-sm font-weight-bold">
+                                    DETALLES DE EXPEDIENTE
+                                </legend>
+                            </div>
+
+
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label for=""><b>NRO EXPEDIENTE:</b></label>
+                                    <input type="text" class="form-control form-control-sm" name="nroExpediente"
+                                           id="nroExpediente">
+                                </div>
+                            </div>                              
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label for=""><b>NOMBRE:</b></label>
+                                    <input type="text" class="form-control form-control-sm" name="nombre"
+                                           id="nombre">
+                                </div>
+                            </div>
+                             <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label for=""><b>APELLIDO:</b></label>
+                                    <input type="text" class="form-control form-control-sm" name="apellido"
+                                           id="apellido">
+                                </div>
+                            </div> 
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label for=""><b>CODIGO MODULAR:</b></label>
+                                    <input type="text" class="form-control form-control-sm" name="codigoModular"
+                                           id="codigoModular">
+                                </div>
+                            </div>
+                            
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label for=""><b>MOTIVO:</b></label>
+                                    <input type="text" class="form-control form-control-sm" name="motivo" id="motivo">
+                                </div>
+                            </div>
+
+                             <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label for=""><b>OBSERVACIÓN:</b></label>
+                                    <input type="text" class="form-control form-control-sm" name="observacion" id="observacion">
+                                </div>
+                            </div>
+
+                             <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label for=""><b>FECHA DE REGISTRO:</b></label>
+                                    <input type="text" class="form-control form-control-sm Fecha" name="fecha" id="fecha">
+                                </div>
+                            </div>
+
+                             <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label for=""><b>DNI:</b></label>
+                                    <input type="text" class="form-control form-control-sm" name="dni" id="dni">
+                                </div>
+                            </div>
+
+                             <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label for=""><b>TITULO PROFESIONAL:</b></label>
+                                    <input type="text" class="form-control form-control-sm" name="tituloProfesional" id="tituloProfesional">
+                                </div>
+                            </div>
+
+                             <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label for=""><b>ESPECIALIDAD:</b></label>
+                                    <input type="text" class="form-control form-control-sm" name="especialidad" id="especialidad">
+                                </div>
+                            </div>
+
+                             <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label for=""><b>ESTABLECIMIENTO:</b></label>
+                                    <input type="text" class="form-control form-control-sm" name="establecimiento" id="establecimiento">
+                                </div>
+                            </div>
+
+                             <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label for=""><b>NIVEL MAGISTERIAL:</b></label>
+                                    <input type="text" class="form-control form-control-sm" name="nivelMagisterial" id="nivelMagisterial">
+                                </div>
+                            </div>
+
+                             <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label for=""><b>JORNADA LABORAL:</b></label>
+                                    <input type="text" class="form-control form-control-sm" name="jornadaLaboral" id="jornadaLaboral">
+                                </div>
+                            </div>
+
+                             <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label for=""><b>RÉGIMEN DE PENSIÓN:</b></label>
+                                    <input type="text" class="form-control form-control-sm" name="regimenPension" id="regimenPension">
+                                </div>
+                            </div>
+
+                             <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label for=""><b>Nº IPSS:</b></label>
+                                    <input type="text" class="form-control form-control-sm" name="nroIpss" id="nroIpss">
+                                </div>
+                            </div>
+
+                             <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label for=""><b>FECHA DE INGRESO:</b></label>
+                                    <input type="text" class="form-control form-control-sm Fecha" name="fechaIngreso" id="fechaIngreso">
+                                </div>
+                            </div>
+
+                             <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label for=""><b>FECHA DE CESE:</b></label>
+                                    <input type="text" class="form-control form-control-sm Fecha" name="fechaCese" id="fechaCese">
+                                </div>
+                            </div>
+
+                             <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label for=""><b>CÓDIGO ESCALAFÓN:</b></label>
+                                    <input type="text" class="form-control form-control-sm" name="codigoEscalafon" id="codigoEscalafon">
+                                </div>
+                            </div>
+
+                             <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label for=""><b>AÑOS:</b></label>
+                                    <input type="text" class="form-control form-control-sm" name="anios" id="anios">
+                                </div>
+                            </div>
+
+                             <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label for=""><b>MESES:</b></label>
+                                    <input type="text" class="form-control form-control-sm" name="meses" id="meses">
+                                </div>
+                            </div>
+
+                             <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label for=""><b>DIAS:</b></label>
+                                    <input type="text" class="form-control form-control-sm" name="dias" id="dias">
+                                </div>
+                            </div>
+
+                             <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label for=""><b>CARGO:</b></label>
+                                    <input type="text" class="form-control form-control-sm" name="cargo" id="cargo">
+                                </div>
+                            </div>
+
+                             <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label for=""><b>TIPO DE SERVIDOR:</b></label>
+                                    <input type="text" class="form-control form-control-sm" name="tipoServidor" id="tipoServidor">
+                                </div>
+                            </div>
+
+                             <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label for=""><b>OTROS:</b></label>
+                                    <input type="text" class="form-control form-control-sm" name="otros" id="otros">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn bg-warning-300" data-dismiss="modal">
+                        <i class="icon-close2 font-size-base mr-1"></i> CERRAR
+                    </button>
+                    <button class="btn bg-dark" id="btnGuardarExpediente">
+                        <i class="icon-checkmark-circle2 font-size-base mr-1"></i> GUARDAR
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section js{
+    <script src="~/styles/js/Documento/DocumentoListar.js"></script>
+}
