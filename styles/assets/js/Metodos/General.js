@@ -1,5 +1,5 @@
 basePath = document.location.origin + "/";
-basePathApi = document.location.origin+"/";
+basePathApi = document.location.origin + "/";
 
 var swalInit = swal.mixin({
     buttonsStyling: false,
@@ -923,3 +923,14 @@ $("select").on("select2:close", function (e) {
 function ParsearJson(_) {
     return _;
 }
+
+$(document).on('click', '#btnCerrarSesion', function () {   
+    EnviarDataPost({
+        url: "Usuario/CerrarSesionLoginJson",
+        data: [],
+        showMessag:false,
+        callBackSuccess: function () {
+            RefrescarVentana();
+        }
+    })
+});

@@ -1,11 +1,5 @@
 ﻿const Documento = function () {
-    const eventos = () => {
-        $(document).on('click', '.btnBuscar', function () {
-            const dataform = $("#frmFiltro").serializeFormJSON();
-            ListarDocumentos({
-                data: dataform
-            });
-        })
+    const eventos = () => {       
         $(document).on('click', '#btnModalExpediente', function () {
             LimpiarFormulario({
                 formulario: "#frmExpediente"
@@ -102,6 +96,9 @@
         var opciones = $.extend({}, defaults, obj);
         $("#frmExpediente").submit();
         let dataform = $("#frmExpediente").serializeFormJSON();
+        dataform = Object.assign(dataform, {
+            idUsuario: customData.id
+        });
         if (_objetoForm_frmExpediente.valid()) {
             if (opciones.nuevo) {
                 EnviarDataPost({

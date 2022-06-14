@@ -1,0 +1,261 @@
+﻿@{
+    ViewBag.Title = "ExpedienteDerivar";
+}
+@{
+    string seleccionado = "";
+    seleccionado = DateTime.Now.Year.ToString();
+}
+
+@section header{
+    <div class="page-header page-header-light">
+        <div class="page-header-content header-elements-md-inline">
+            <div class="page-title d-flex">
+                <h4>
+                    <span class="font-weight-semibold"> DERIVAR EXPEDIENTE</span>
+                </h4>
+                <a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
+            </div>
+            <div class="header-elements d-none">
+                <div class="d-flex justify-content-center">
+                    <button type="button" class="btn btn-link btn-float text-default" id="btnBuscar">
+                        <i class="icon-search4 text-slate-700"></i><span>BUSCAR</span>
+                    </button>
+                    <button type="button" class="btn btn-link btn-float text-default" id="btnDerivarExpediente">
+                        <i class="icon-floppy-disk text-slate-700"></i><span>DERIVAR EXPEDIENTE</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
+            <div class="d-flex">
+                <div class="breadcrumb">
+                    <a href="#" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> INICIO</a>
+                    <a href="#" class="breadcrumb-item"> EXPEDIENTES REGISTRADOS</a>
+                </div>
+                <a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
+            </div>
+
+        </div>
+    </div>
+}
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <form id="frmFiltro" autocomplete="off">
+                    <div class="row">
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                <label for=""><b><i class="icon-calendar mr-1"></i>NRO DE EXPEDIENTE:</b></label>
+                                <div class="input-group input-group-sm">
+                                    <div class="input-group input-group-sm">
+                                        <input type="text" class="form-control form-control-sm" id="nroExpediente"
+                                               name="nroExpediente">
+                                        <span class="input-group-append">
+                                            <button class="btn btn-light" type="button">
+                                                <i class="icon-user"></i>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                <label for=""><b><i class="icon-calendar mr-1"></i>AÑO:</b></label>
+                                <div class="input-group input-group-sm">
+                                    <div class="input-group input-group-sm">
+                                        <select id="CbAnios" name="anio" class="form-control"
+                                                data-container-css-class="select-sm">
+                                            @{
+                                                for (int i = 2010; i < 2050; i++)
+                                                {
+                                                    <option value="@i">@i</option>
+                                                }
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-12 mb-4">
+                        <table id="table" class="table table-bordered table-sm table-striped" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>Nº EXPEDIENTE</th>
+                                    <th>FECHA</th>
+                                    <th>APELLIDO</th>
+                                    <th>NOMBRE</th>
+                                    <th>MOTIVO</th>
+                                    <th>ENVIADO POR</th>
+                                    <th>Nº DERIVACIONES</th>
+                                    <th>ACCIÓN A REALIZAR</th>
+                                    <th>OPCIONES</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td colspan="8" class="text-center">NO SE HA ENCONTRADO REGISTROS</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label for=""><b>NRO EXPEDIENTE:</b></label>
+                                    <input type="text" class="form-control form-control-sm" name="nroExpediente" readonly
+                                           id="nroExpedienteDetalle">
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label for=""><b>FECHA DE REGISTRO:</b></label>
+                                    <input type="text" class="form-control form-control-sm" name="fecha" readonly
+                                           id="fecha">
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label for=""><b>APELLIDO:</b></label>
+                                    <input type="text" class="form-control form-control-sm" name="apellido" readonly
+                                           id="apellido">
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label for=""><b>NOMBRE:</b></label>
+                                    <input type="text" class="form-control form-control-sm" name="nombre" id="nombre" readonly>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label for=""><b>ESTABLECIMIENTO:</b></label>
+                                    <input type="text" class="form-control form-control-sm" name="establecimiento" readonly
+                                           id="establecimiento">
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label for=""><b>MOTIVO:</b></label>
+                                    <input type="text" class="form-control form-control-sm" name="motivo" id="motivo" readonly>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label for=""><b>ENVIADO POR:</b></label>
+                                    <input type="text" class="form-control form-control-sm" name="usuario" id="usuario" readonly>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <fieldset>
+                            <legend class="font-weight-semibold text-uppercase font-size-sm">
+                                <i class="icon-file-text2 mr-2"></i>
+                                Derivar de Expediente
+                            </legend>
+                        </fieldset>
+                    </div>
+                    <div class="col-lg-12">
+                        <form id="frmDerivar" autocomplete="off">
+                            <div class="row">
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        <label for=""><b>TIPO DE DERIVACIÓN:</b></label>
+                                        <select id="CbTipoDerivacion" multiple="multiple" name="ListaidTipoDerivacion" class="form-control" data-container-css-class="select-sm">
+                                            <option value="1">1</option>
+                                            <option value="2">1</option>
+                                            <option value="3">1</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        <label for=""><b><i class="icon-calendar mr-1"></i>FECHA:</b></label>
+                                        <div class="input-group input-group-sm">
+                                            <div class="input-group input-group-sm">
+                                                <input type="text" class="form-control form-control-sm Fecha" id="fechaDerivacion" name="fechaDerivacion">
+                                                <span class="input-group-append">
+                                                    <button class="btn btn-light" type="button">
+                                                        <i class="icon-calendar"></i>
+                                                    </button>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        <label for=""><b><i class="icon-calendar mr-1"></i>ACCIÓN A REALIZAR:</b></label>
+                                        <div class="input-group input-group-sm">
+                                            <div class="input-group input-group-sm">
+                                                <input type="text" class="form-control form-control-sm" id="accionRealizar" name="accionRealizar">
+                                                <span class="input-group-append">
+                                                    <button class="btn btn-light" type="button">
+                                                        <i class="icon-file-empty"></i>
+                                                    </button>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        <label for=""><b><i class="icon-calendar mr-1"></i>DOCUMENTO EMITIDO:</b></label>
+                                        <div class="input-group input-group-sm">
+                                            <div class="input-group input-group-sm">
+                                                <input type="text" class="form-control form-control-sm" id="documentoEmitido" name="documentoEmitido">
+                                                <span class="input-group-append">
+                                                    <button class="btn btn-light" type="button">
+                                                        <i class="icon-file-empty"></i>
+                                                    </button>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group mb-3 mb-md-2">
+                                        <label class="d-block font-weight-semibold">ESTADO EXPEDIENTE:</label>
+                                        <div class="custom-control custom-radio custom-control-inline">
+                                            <input type="radio" class="custom-control-input" name="estadoExpediente" id="custom_radio_inline_unchecked" value="1" checked>
+                                            <label class="custom-control-label" for="custom_radio_inline_unchecked">APROBADO</label>
+                                        </div>
+            
+                                        <div class="custom-control custom-radio custom-control-inline">
+                                            <input type="radio" class="custom-control-input" name="estadoExpediente" id="custom_radio_inline_checked" value="0">
+                                            <label class="custom-control-label" for="custom_radio_inline_checked">DEVUELTO</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label for=""><b><i class="icon-calendar mr-1"></i>COMENTARIO:</b></label>
+                                        <textarea class="form-control form-control-sm" id="comentario" name="comentario"></textarea>
+                                    </div>                                    
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section js{
+    <script src="~/styles/js/Documento/DocumentoDerivar.js"></script>
+}

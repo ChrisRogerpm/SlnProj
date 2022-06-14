@@ -814,17 +814,26 @@
     <Content Include="styles\global_assets\js\plugins\visualization\d3\venn.js" />
     <Content Include="styles\global_assets\js\plugins\visualization\dimple\dimple.min.js" />
     <Content Include="styles\global_assets\js\plugins\visualization\echarts\echarts.min.js" />
+    <Content Include="styles\js\Autenticacion\Login.js" />
+    <Content Include="styles\js\Documento\DocumentoDerivar.js" />
     <Content Include="styles\js\Documento\DocumentoListar.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\DerivacionController.cs" />
     <Compile Include="Controllers\DocumentoController.cs" />
+    <Compile Include="Controllers\ResolucionController.cs" />
+    <Compile Include="Controllers\TipoDerivacionController.cs" />
+    <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Funciones\Utilitarios.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Derivacion.cs" />
     <Compile Include="Models\Documento.cs" />
+    <Compile Include="Models\TipoDerivacion.cs" />
+    <Compile Include="Models\Usuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -892,6 +901,8 @@
     <Content Include="styles\global_assets\css\icons\icomoon\fonts\icomoone627.woff" />
     <Content Include="styles\global_assets\css\icons\material\fonts\material-icons119d.ttf" />
     <Content Include="styles\global_assets\css\icons\material\fonts\material-icons119d.woff" />
+    <Content Include="Views\Documento\ExpedienteDerivar.cshtml" />
+    <Content Include="Views\Usuario\Login.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -901,6 +912,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Derivacion\" />
+    <Folder Include="Views\Resolucion\" />
+    <Folder Include="Views\TipoDerivacion\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />

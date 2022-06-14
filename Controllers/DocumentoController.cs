@@ -16,6 +16,10 @@ namespace Project.Controllers
         {
             return View();
         }
+        public ActionResult ExpedienteDerivar()
+        {
+            return View();
+        }        
         [HttpGet]
         public ActionResult ExpedienteListarJson()
         {
@@ -24,6 +28,36 @@ namespace Project.Controllers
             try
             {
                 data = objDocumento.DocumentoListar();
+            }
+            catch (Exception ex)
+            {
+                mensaje = ex.Message;
+            }
+            return Json(new { data, mensaje }, JsonRequestBehavior.AllowGet);
+        }
+        [HttpGet]
+        public ActionResult DocumentoFiltroListarJson(string nroExpediente, string anio)
+        {
+            string mensaje = "";
+            var data = new List<Documento>();
+            try
+            {
+                data = objDocumento.DocumentoFiltroListar(nroExpediente,anio);
+            }
+            catch (Exception ex)
+            {
+                mensaje = ex.Message;
+            }
+            return Json(new { data, mensaje }, JsonRequestBehavior.AllowGet);
+        }
+        [HttpGet]
+        public ActionResult DocumentoDerivadoListarJson(string nroExpediente, string anio)
+        {
+            string mensaje = "";
+            var data = new List<Documento>();
+            try
+            {
+                data = objDocumento.DocumentoDerivadoListar(nroExpediente,anio);
             }
             catch (Exception ex)
             {
@@ -50,7 +84,7 @@ namespace Project.Controllers
         public ActionResult ExpedienteRegistrarJson(Documento obj)
         {
             bool respuesta = false;
-            string mensaje = "";
+            string mensaje;
             try
             {
                 objDocumento.DocumentoRegistrar(obj);

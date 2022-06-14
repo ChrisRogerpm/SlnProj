@@ -11,6 +11,8 @@ namespace Project.Models
     public class Documento
     {
         public int id { get; set; }
+        public int idUsuario { get; set; }
+        public string nombreUsuario { get; set; }
         public string nroExpediente { get; set; }
         public string nombre { get; set; }
         public string apellido { get; set; }
@@ -103,10 +105,149 @@ namespace Project.Models
 
             return list;
         }
+        public List<Documento> DocumentoFiltroListar(string nroExpediente, string anio)
+        {
+            List<Documento> list = new List<Documento>();
+
+            string consulta = @"select
+                                d.*                                
+                                from documento as d                                 
+                                where year(d.fecha) = @p0 and d.nroExpediente like " + "'%" + nroExpediente + "%'";
+
+            try
+            {
+                using (var con = new SqlConnection(_conexion))
+                {
+                    con.Open();
+                    var query = new SqlCommand(consulta, con);
+                    query.Parameters.AddWithValue("@p0", Utilitarios.ValidarStr(anio));
+                    using (var dr = query.ExecuteReader())
+                    {
+                        if (dr.HasRows)
+                        {
+                            while (dr.Read())
+                            {
+                                Documento objDocumento = new Documento
+                                {
+                                    id = Utilitarios.ValidarInteger(dr["id"]),                                    
+                                    nroExpediente = Utilitarios.ValidarStr(dr["nroExpediente"]),
+                                    nombre = Utilitarios.ValidarStr(dr["nombre"]),
+                                    apellido = Utilitarios.ValidarStr(dr["apellido"]),
+                                    codigoModular = Utilitarios.ValidarStr(dr["codigoModular"]),
+                                    motivo = Utilitarios.ValidarStr(dr["motivo"]),
+                                    observacion = Utilitarios.ValidarStr(dr["observacion"]),
+                                    fecha = Utilitarios.ValidarDate(dr["fecha"]).ToShortDateString(),
+                                    dni = Utilitarios.ValidarStr(dr["dni"]),
+                                    tituloProfesional = Utilitarios.ValidarStr(dr["tituloProfesional"]),
+                                    especialidad = Utilitarios.ValidarStr(dr["especialidad"]),
+                                    establecimiento = Utilitarios.ValidarStr(dr["establecimiento"]),
+                                    nivelMagisterial = Utilitarios.ValidarStr(dr["nivelMagisterial"]),
+                                    jornadaLaboral = Utilitarios.ValidarStr(dr["jornadaLaboral"]),
+                                    regimenPension = Utilitarios.ValidarStr(dr["regimenPension"]),
+                                    nroIpss = Utilitarios.ValidarStr(dr["nroIpss"]),
+                                    fechaIngreso = Utilitarios.ValidarDate(dr["fechaIngreso"]).ToShortDateString(),
+                                    fechaCese = Utilitarios.ValidarDate(dr["fechaCese"]).ToShortDateString(),
+                                    codigoEscalafon = Utilitarios.ValidarStr(dr["codigoEscalafon"]),
+                                    anios = Utilitarios.ValidarInteger(dr["anios"]),
+                                    meses = Utilitarios.ValidarInteger(dr["meses"]),
+                                    dias = Utilitarios.ValidarInteger(dr["dias"]),
+                                    cargo = Utilitarios.ValidarStr(dr["cargo"]),
+                                    tipoServidor = Utilitarios.ValidarStr(dr["tipoServidor"]),
+                                    otros = Utilitarios.ValidarStr(dr["otros"]),
+
+                                };
+                                list.Add(objDocumento);
+                            }
+                        }
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+            }
+
+            return list;
+        }
+
+        public List<Documento> DocumentoDerivadoListar(string nroExpediente, string anio)
+        {
+            List<Documento> list = new List<Documento>();
+
+            string consulta = @"select
+                                d.*                                
+                                from documento as d                                 
+                                where 
+                                YEAR(d.fecha) = @p0 AND 
+                                d.nroExpediente like " + "'%" + nroExpediente + "%' " +
+                                "d.id not in (select dr.idDocumento from derivacion as dr group by dr.idDocumento)";
+;
+
+            try
+            {
+                using (var con = new SqlConnection(_conexion))
+                {
+                    con.Open();
+                    var query = new SqlCommand(consulta, con);
+                    query.Parameters.AddWithValue("@p0", Utilitarios.ValidarStr(anio));
+                    using (var dr = query.ExecuteReader())
+                    {
+                        if (dr.HasRows)
+                        {
+                            while (dr.Read())
+                            {
+                                Documento objDocumento = new Documento
+                                {
+                                    id = Utilitarios.ValidarInteger(dr["id"]),
+                                    nroExpediente = Utilitarios.ValidarStr(dr["nroExpediente"]),
+                                    nombre = Utilitarios.ValidarStr(dr["nombre"]),
+                                    apellido = Utilitarios.ValidarStr(dr["apellido"]),
+                                    codigoModular = Utilitarios.ValidarStr(dr["codigoModular"]),
+                                    motivo = Utilitarios.ValidarStr(dr["motivo"]),
+                                    observacion = Utilitarios.ValidarStr(dr["observacion"]),
+                                    fecha = Utilitarios.ValidarDate(dr["fecha"]).ToShortDateString(),
+                                    dni = Utilitarios.ValidarStr(dr["dni"]),
+                                    tituloProfesional = Utilitarios.ValidarStr(dr["tituloProfesional"]),
+                                    especialidad = Utilitarios.ValidarStr(dr["especialidad"]),
+                                    establecimiento = Utilitarios.ValidarStr(dr["establecimiento"]),
+                                    nivelMagisterial = Utilitarios.ValidarStr(dr["nivelMagisterial"]),
+                                    jornadaLaboral = Utilitarios.ValidarStr(dr["jornadaLaboral"]),
+                                    regimenPension = Utilitarios.ValidarStr(dr["regimenPension"]),
+                                    nroIpss = Utilitarios.ValidarStr(dr["nroIpss"]),
+                                    fechaIngreso = Utilitarios.ValidarDate(dr["fechaIngreso"]).ToShortDateString(),
+                                    fechaCese = Utilitarios.ValidarDate(dr["fechaCese"]).ToShortDateString(),
+                                    codigoEscalafon = Utilitarios.ValidarStr(dr["codigoEscalafon"]),
+                                    anios = Utilitarios.ValidarInteger(dr["anios"]),
+                                    meses = Utilitarios.ValidarInteger(dr["meses"]),
+                                    dias = Utilitarios.ValidarInteger(dr["dias"]),
+                                    cargo = Utilitarios.ValidarStr(dr["cargo"]),
+                                    tipoServidor = Utilitarios.ValidarStr(dr["tipoServidor"]),
+                                    otros = Utilitarios.ValidarStr(dr["otros"]),
+
+                                };
+                                list.Add(objDocumento);
+                            }
+                        }
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+            }
+
+            return list;
+        }
+
         public Documento DocumentoDetalle(int id)
         {
             Documento obj = new Documento();
-            string consulta = @"select * from documento as d where d.id = @p0";
+            string consulta = @"select 
+                                d.*,
+                                u.nombreCompleto 
+                                from documento as d 
+                                inner join usuario as u on u.id = d.idUsuario
+                                where d.id = @p0";
             try
             {
                 using (var con = new SqlConnection(_conexion))
@@ -122,6 +263,7 @@ namespace Project.Models
                             while (dr.Read())
                             {
                                 obj.id = Utilitarios.ValidarInteger(dr["id"]);
+                                obj.nombreUsuario = Utilitarios.ValidarStr(dr["nombreCompleto"]);
                                 obj.nroExpediente = Utilitarios.ValidarStr(dr["nroExpediente"]);
                                 obj.nombre = Utilitarios.ValidarStr(dr["nombre"]);
                                 obj.apellido = Utilitarios.ValidarStr(dr["apellido"]);
@@ -163,6 +305,7 @@ namespace Project.Models
             bool respuesta = false;
 
             string consulta = @"INSERT INTO documento (
+                                    idUsuario,                                    
                                     nroExpediente,
                                     nombre,
                                     apellido,
@@ -188,6 +331,7 @@ namespace Project.Models
                                     tipoServidor,
                                     otros)
                             VALUES (
+                                    @p24,                                    
                                     @p0,
                                     @p1,
                                     @p2,
@@ -217,7 +361,7 @@ namespace Project.Models
                 using (var con = new SqlConnection(_conexion))
                 {
                     con.Open();
-                    var query = new SqlCommand(consulta, con);                    
+                    var query = new SqlCommand(consulta, con);
                     query.Parameters.AddWithValue("@p0", Utilitarios.ValidarStr(objDetalle.nroExpediente));
                     query.Parameters.AddWithValue("@p1", Utilitarios.ValidarStr(objDetalle.nombre));
                     query.Parameters.AddWithValue("@p2", Utilitarios.ValidarStr(objDetalle.apellido));
@@ -242,6 +386,7 @@ namespace Project.Models
                     query.Parameters.AddWithValue("@p21", Utilitarios.ValidarStr(objDetalle.cargo));
                     query.Parameters.AddWithValue("@p22", Utilitarios.ValidarStr(objDetalle.tipoServidor));
                     query.Parameters.AddWithValue("@p23", Utilitarios.ValidarStr(objDetalle.otros));
+                    query.Parameters.AddWithValue("@p24", Utilitarios.ValidarInteger(objDetalle.idUsuario));                    
                     query.ExecuteNonQuery();
                     respuesta = true;
                 }
@@ -288,7 +433,7 @@ namespace Project.Models
                 using (var con = new SqlConnection(_conexion))
                 {
                     con.Open();
-                    var query = new SqlCommand(consulta, con);                    
+                    var query = new SqlCommand(consulta, con);
                     query.Parameters.AddWithValue("@p0", Utilitarios.ValidarStr(objDetalle.nroExpediente));
                     query.Parameters.AddWithValue("@p1", Utilitarios.ValidarStr(objDetalle.nombre));
                     query.Parameters.AddWithValue("@p2", Utilitarios.ValidarStr(objDetalle.apellido));
