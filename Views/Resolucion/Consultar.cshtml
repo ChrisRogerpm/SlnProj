@@ -1,0 +1,265 @@
+﻿
+@{
+    ViewBag.Title = "Consultar";
+}
+
+@section header{
+    <div class="page-header page-header-light">
+        <div class="page-header-content header-elements-md-inline">
+            <div class="page-title d-flex">
+                <h4>
+                    <span class="font-weight-semibold"> DERIVAR EXPEDIENTE</span>
+                </h4>
+                <a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
+            </div>
+            <div class="header-elements d-none">
+                <div class="d-flex justify-content-center">
+                    <button type="button" class="btn btn-link btn-float text-default" id="btnBuscar">
+                        <i class="icon-search4 text-slate-700"></i><span>BUSCAR</span>
+                    </button>
+                    <button type="button" class="btn btn-link btn-float text-default" id="btnDerivarExpediente">
+                        <i class="icon-floppy-disk text-slate-700"></i><span>DERIVAR EXPEDIENTE</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
+            <div class="d-flex">
+                <div class="breadcrumb">
+                    <a href="#" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> INICIO</a>
+                    <a href="#" class="breadcrumb-item"> EXPEDIENTES REGISTRADOS</a>
+                </div>
+                <a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
+            </div>
+
+        </div>
+    </div>
+}
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <form id="frmFiltro" autocomplete="off">
+                    <div class="row">
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                <label for=""><b><i class="icon-calendar mr-1"></i>NRO DE EXPEDIENTE:</b></label>
+                                <div class="input-group input-group-sm">
+                                    <div class="input-group input-group-sm">
+                                        <input type="text" class="form-control form-control-sm" id="nroExpediente"
+                                               name="nroExpediente">
+                                        <span class="input-group-append">
+                                            <button class="btn btn-light" type="button">
+                                                <i class="icon-user"></i>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                <label for=""><b><i class="icon-calendar mr-1"></i>AÑO:</b></label>
+                                <div class="input-group input-group-sm">
+                                    <div class="input-group input-group-sm">
+                                        <select id="CbAnios" name="anio" class="form-control"
+                                                data-container-css-class="select-sm">
+                                            @{
+                                                for (int i = 2010; i < 2050; i++)
+                                                {
+                                                    <option value="@i">@i</option>
+                                                }
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-12 mb-4">
+                        <table id="table" class="table table-bordered table-sm table-striped" style="width:100%">
+                            @*<thead>
+                                <tr>
+                                    <th>Nº RESOLUCIÓN</th>
+                                    <th>FECHA</th>
+                                    <th>APELLIDO</th>
+                                    <th>NOMBRE</th>
+                                    <th>MOTIVO</th>
+                                    <th>CÓDIGO ESCALAFÓN</th>
+                                    <th>Nº DERIVACIONES</th>
+                                    <th>OBSERVACIÓN</th>
+                                    <th>OPCIONES</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td colspan="8" class="text-center">NO SE HA ENCONTRADO REGISTROS</td>
+                                </tr>
+                            </tbody>*@
+                        </table>
+                    </div>
+                    <div class="col-lg-12">
+                        <fieldset>
+                            <legend class="font-weight-semibold text-uppercase font-size-sm">
+                                <i class="icon-file-text2 mr-2"></i>
+                                Datos de resolucion
+                            </legend>
+                        </fieldset>
+                    </div>
+                    <div class="col-lg-12">
+                        <form id="frmDerivar" autocomplete="off">
+                            <div class="row">
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        <label for=""><b>DNI:</b></label>
+                                        <input type="text" class="form-control form-control-sm" readonly id="dni">
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        <label for=""><b>TITULO PROFESIONAL:</b></label>
+                                        <input type="text" class="form-control form-control-sm" readonly
+                                               id="tituloProfesional">
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        <label for=""><b>ESPECIALIDAD:</b></label>
+                                        <input type="text" class="form-control form-control-sm" readonly
+                                               id="especialidad">
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        <label for=""><b>ESTABLECIMIENTO:</b></label>
+                                        <input type="text" class="form-control form-control-sm" readonly
+                                               id="establecimiento">
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        <label for=""><b>NIVEL MAGISTERIAL:</b></label>
+                                        <input type="text" class="form-control form-control-sm" readonly
+                                               id="nivelMagisterial">
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        <label for=""><b>JORNADA LABORAL:</b></label>
+                                        <input type="text" class="form-control form-control-sm" readonly
+                                               id="jornadaLaboral">
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        <label for=""><b>RÉGIMEN DE PENSIÓN:</b></label>
+                                        <input type="text" class="form-control form-control-sm" readonly
+                                               id="regimenPension">
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        <label for=""><b>Nº IPSS:</b></label>
+                                        <input type="text" class="form-control form-control-sm" readonly
+                                               id="nroIpss">
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        <label for=""><b>FECHA DE INGRESO:</b></label>
+                                        <input type="text" class="form-control form-control-sm" readonly
+                                               name="fechaIngreso" id="fechaIngreso">
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        <label for=""><b>FECHA DE CESE:</b></label>
+                                        <input type="text" class="form-control form-control-sm" readonly
+                                               id="fechaCese">
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        <label for=""><b>CÓDIGO ESCALAFÓN:</b></label>
+                                        <input type="text" class="form-control form-control-sm" readonly
+                                               id="codigoEscalafon">
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-12">
+                                    <fieldset>
+                                        <legend class="font-weight-semibold text-uppercase font-size-sm">
+                                            <i class="icon-file-text2 mr-2"></i>
+                                            Tiempo de servicio
+                                        </legend>
+                                    </fieldset>
+                                </div>
+
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        <label for=""><b>AÑOS:</b></label>
+                                        <input type="text" class="form-control form-control-sm" readonly
+                                               id="anios">
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        <label for=""><b>MESES:</b></label>
+                                        <input type="text" class="form-control form-control-sm" readonly
+                                               id="meses">
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        <label for=""><b>DÍAS:</b></label>
+                                        <input type="text" class="form-control form-control-sm" readonly
+                                               id="dias">
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label for=""><b>CARGO:</b></label>
+                                        <input type="text" class="form-control form-control-sm" readonly
+                                               id="cargo">
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label for=""><b>TIPO DE SERVIDOR:</b></label>
+                                        <input type="text" class="form-control form-control-sm" readonly
+                                               id="tipoServidor">
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label for=""><b>OTRO:</b></label>
+                                        <input type="text" class="form-control form-control-sm" readonly
+                                               id="otros">
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section js{
+    <script src="~/styles/js/Resolucion/ResolucionConsultar.js"></script>
+}

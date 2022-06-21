@@ -36,6 +36,22 @@ namespace Project.Controllers
             }
             return Json(new { respuesta, mensaje });
         }
+        [HttpGet]
+        public ActionResult DerivacionDetalleJson(string nroExpediente, string anio)
+        {
+            string mensaje = "";
+            var data = new Derivacion();
+            try
+            {
+                data = objDerivacion.DerivacionDetalle(nroExpediente, anio);
+            }
+            catch (Exception ex)
+            {
+                mensaje = ex.Message;
+            }
+            return Json(new { data, mensaje }, JsonRequestBehavior.AllowGet);
+        }
+
 
     }
 }

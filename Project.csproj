@@ -817,6 +817,8 @@
     <Content Include="styles\js\Autenticacion\Login.js" />
     <Content Include="styles\js\Documento\DocumentoDerivar.js" />
     <Content Include="styles\js\Documento\DocumentoListar.js" />
+    <Content Include="styles\js\Resolucion\ResolucionConsultar.js" />
+    <Content Include="styles\js\Resolucion\ResolucionRegistrar.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -832,6 +834,7 @@
     </Compile>
     <Compile Include="Models\Derivacion.cs" />
     <Compile Include="Models\Documento.cs" />
+    <Compile Include="Models\Resolucion.cs" />
     <Compile Include="Models\TipoDerivacion.cs" />
     <Compile Include="Models\Usuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -903,6 +906,8 @@
     <Content Include="styles\global_assets\css\icons\material\fonts\material-icons119d.woff" />
     <Content Include="Views\Documento\ExpedienteDerivar.cshtml" />
     <Content Include="Views\Usuario\Login.cshtml" />
+    <Content Include="Views\Resolucion\Registrar.cshtml" />
+    <Content Include="Views\Resolucion\Consultar.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -913,7 +918,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Derivacion\" />
-    <Folder Include="Views\Resolucion\" />
     <Folder Include="Views\TipoDerivacion\" />
   </ItemGroup>
   <ItemGroup>
