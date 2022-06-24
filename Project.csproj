@@ -819,6 +819,7 @@
     <Content Include="styles\js\Documento\DocumentoListar.js" />
     <Content Include="styles\js\Resolucion\ResolucionConsultar.js" />
     <Content Include="styles\js\Resolucion\ResolucionRegistrar.js" />
+    <Content Include="styles\js\Usuario\Listar.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -908,6 +909,7 @@
     <Content Include="Views\Usuario\Login.cshtml" />
     <Content Include="Views\Resolucion\Registrar.cshtml" />
     <Content Include="Views\Resolucion\Consultar.cshtml" />
+    <Content Include="Views\Usuario\Listar.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

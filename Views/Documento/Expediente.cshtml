@@ -1,6 +1,6 @@
-﻿
+﻿@using Project.Models
 @{
-    ViewBag.Title = "Expediente";
+    Usuario obj = (Usuario)Session["UsuarioFull"];
 }
 
 @section header{
@@ -14,13 +14,15 @@
             </div>
             <div class="header-elements d-none">
                 <div class="d-flex justify-content-center">
-                    <button type="button" class="btn btn-link btn-float text-default" id="btnModalExpediente">
-                        <i class="icon-googleplus5 text-slate-700"></i><span>NUEVO</span>
-                    </button>
-                    <!-- <button type="button" class="btn btn-link btn-float text-default btnBuscar">
+                    <button type="button" class="btn btn-link btn-float text-default" id="btnBuscar">
                         <i class="icon-search4 text-slate-700"></i><span>BUSCAR</span>
-                    </button> -->
-
+                    </button>
+                    @if (obj.idTipoUsuario == 2)
+                    {
+                        <button type="button" class="btn btn-link btn-float text-default" id="btnModalExpediente">
+                            <i class="icon-googleplus5 text-slate-700"></i><span>NUEVO</span>
+                        </button>
+                    }
                 </div>
             </div>
         </div>
@@ -38,29 +40,51 @@
 }
 
 <div class="row">
-    <!-- <div class="col-lg-12">
+    <div class="col-lg-12">
         <div class="card">
             <div class="card-body">
-                <form id="frmFiltro">
+                <form id="frmFiltro" autocomplete="off">
                     <div class="row">
-                        <div class="col-lg-3">
+                        <div class="col-lg-2">
                             <div class="form-group">
                                 <label for=""><b><i class="icon-calendar mr-1"></i>NRO DE EXPEDIENTE:</b></label>
                                 <div class="input-group input-group-sm">
                                     <div class="input-group input-group-sm">
-                                        <input type="text" class="form-control form-control-sm Fecha" id="nroExpediente" name="nroExpediente">
+                                        <input type="text" class="form-control form-control-sm" id="nroExpediente"
+                                               name="nroExpediente">
                                         <span class="input-group-append">
-                                            <button class="btn btn-light" type="button"><i class="icon-user"></i></button>
+                                            <button class="btn btn-light" type="button">
+                                                <i class="icon-user"></i>
+                                            </button>
                                         </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                <label for=""><b><i class="icon-calendar mr-1"></i>AÑO:</b></label>
+                                <div class="input-group input-group-sm">
+                                    <div class="input-group input-group-sm">
+                                        <select id="CbAnios" name="anio" class="form-control"
+                                                data-container-css-class="select-sm">
+                                            @{
+                                                for (int i = 2010; i < 2050; i++)
+                                                {
+                                                    <option value="@i">@i</option>
+                                                }
+                                            }
+                                        </select>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </form>
+
             </div>
         </div>
-    </div> -->
+    </div>
     <div class="col-md-12">
         <div class="card">
             <div class="card-body">
@@ -92,7 +116,7 @@
                                     <input type="text" class="form-control form-control-sm" name="nroExpediente"
                                            id="nroExpediente">
                                 </div>
-                            </div>                              
+                            </div>
                             <div class="col-lg-3">
                                 <div class="form-group">
                                     <label for=""><b>NOMBRE:</b></label>
@@ -100,13 +124,13 @@
                                            id="nombre">
                                 </div>
                             </div>
-                             <div class="col-lg-3">
+                            <div class="col-lg-3">
                                 <div class="form-group">
                                     <label for=""><b>APELLIDO:</b></label>
                                     <input type="text" class="form-control form-control-sm" name="apellido"
                                            id="apellido">
                                 </div>
-                            </div> 
+                            </div>
                             <div class="col-lg-3">
                                 <div class="form-group">
                                     <label for=""><b>CODIGO MODULAR:</b></label>
@@ -114,7 +138,7 @@
                                            id="codigoModular">
                                 </div>
                             </div>
-                            
+
                             <div class="col-lg-3">
                                 <div class="form-group">
                                     <label for=""><b>MOTIVO:</b></label>
@@ -122,133 +146,133 @@
                                 </div>
                             </div>
 
-                             <div class="col-lg-3">
+                            <div class="col-lg-3">
                                 <div class="form-group">
                                     <label for=""><b>OBSERVACIÓN:</b></label>
                                     <input type="text" class="form-control form-control-sm" name="observacion" id="observacion">
                                 </div>
                             </div>
 
-                             <div class="col-lg-3">
+                            <div class="col-lg-3">
                                 <div class="form-group">
                                     <label for=""><b>FECHA DE REGISTRO:</b></label>
                                     <input type="text" class="form-control form-control-sm Fecha" name="fecha" id="fecha">
                                 </div>
                             </div>
 
-                             <div class="col-lg-3">
+                            <div class="col-lg-3">
                                 <div class="form-group">
                                     <label for=""><b>DNI:</b></label>
                                     <input type="text" class="form-control form-control-sm" name="dni" id="dni">
                                 </div>
                             </div>
 
-                             <div class="col-lg-3">
+                            <div class="col-lg-3">
                                 <div class="form-group">
                                     <label for=""><b>TITULO PROFESIONAL:</b></label>
                                     <input type="text" class="form-control form-control-sm" name="tituloProfesional" id="tituloProfesional">
                                 </div>
                             </div>
 
-                             <div class="col-lg-3">
+                            <div class="col-lg-3">
                                 <div class="form-group">
                                     <label for=""><b>ESPECIALIDAD:</b></label>
                                     <input type="text" class="form-control form-control-sm" name="especialidad" id="especialidad">
                                 </div>
                             </div>
 
-                             <div class="col-lg-3">
+                            <div class="col-lg-3">
                                 <div class="form-group">
                                     <label for=""><b>ESTABLECIMIENTO:</b></label>
                                     <input type="text" class="form-control form-control-sm" name="establecimiento" id="establecimiento">
                                 </div>
                             </div>
 
-                             <div class="col-lg-3">
+                            <div class="col-lg-3">
                                 <div class="form-group">
                                     <label for=""><b>NIVEL MAGISTERIAL:</b></label>
                                     <input type="text" class="form-control form-control-sm" name="nivelMagisterial" id="nivelMagisterial">
                                 </div>
                             </div>
 
-                             <div class="col-lg-3">
+                            <div class="col-lg-3">
                                 <div class="form-group">
                                     <label for=""><b>JORNADA LABORAL:</b></label>
                                     <input type="text" class="form-control form-control-sm" name="jornadaLaboral" id="jornadaLaboral">
                                 </div>
                             </div>
 
-                             <div class="col-lg-3">
+                            <div class="col-lg-3">
                                 <div class="form-group">
                                     <label for=""><b>RÉGIMEN DE PENSIÓN:</b></label>
                                     <input type="text" class="form-control form-control-sm" name="regimenPension" id="regimenPension">
                                 </div>
                             </div>
 
-                             <div class="col-lg-3">
+                            <div class="col-lg-3">
                                 <div class="form-group">
                                     <label for=""><b>Nº IPSS:</b></label>
                                     <input type="text" class="form-control form-control-sm" name="nroIpss" id="nroIpss">
                                 </div>
                             </div>
 
-                             <div class="col-lg-3">
+                            <div class="col-lg-3">
                                 <div class="form-group">
                                     <label for=""><b>FECHA DE INGRESO:</b></label>
                                     <input type="text" class="form-control form-control-sm Fecha" name="fechaIngreso" id="fechaIngreso">
                                 </div>
                             </div>
 
-                             <div class="col-lg-3">
+                            <div class="col-lg-3">
                                 <div class="form-group">
                                     <label for=""><b>FECHA DE CESE:</b></label>
                                     <input type="text" class="form-control form-control-sm Fecha" name="fechaCese" id="fechaCese">
                                 </div>
                             </div>
 
-                             <div class="col-lg-3">
+                            <div class="col-lg-3">
                                 <div class="form-group">
                                     <label for=""><b>CÓDIGO ESCALAFÓN:</b></label>
                                     <input type="text" class="form-control form-control-sm" name="codigoEscalafon" id="codigoEscalafon">
                                 </div>
                             </div>
 
-                             <div class="col-lg-3">
+                            <div class="col-lg-3">
                                 <div class="form-group">
                                     <label for=""><b>AÑOS:</b></label>
                                     <input type="text" class="form-control form-control-sm" name="anios" id="anios">
                                 </div>
                             </div>
 
-                             <div class="col-lg-3">
+                            <div class="col-lg-3">
                                 <div class="form-group">
                                     <label for=""><b>MESES:</b></label>
                                     <input type="text" class="form-control form-control-sm" name="meses" id="meses">
                                 </div>
                             </div>
 
-                             <div class="col-lg-3">
+                            <div class="col-lg-3">
                                 <div class="form-group">
                                     <label for=""><b>DIAS:</b></label>
                                     <input type="text" class="form-control form-control-sm" name="dias" id="dias">
                                 </div>
                             </div>
 
-                             <div class="col-lg-3">
+                            <div class="col-lg-3">
                                 <div class="form-group">
                                     <label for=""><b>CARGO:</b></label>
                                     <input type="text" class="form-control form-control-sm" name="cargo" id="cargo">
                                 </div>
                             </div>
 
-                             <div class="col-lg-3">
+                            <div class="col-lg-3">
                                 <div class="form-group">
                                     <label for=""><b>TIPO DE SERVIDOR:</b></label>
                                     <input type="text" class="form-control form-control-sm" name="tipoServidor" id="tipoServidor">
                                 </div>
                             </div>
 
-                             <div class="col-lg-3">
+                            <div class="col-lg-3">
                                 <div class="form-group">
                                     <label for=""><b>OTROS:</b></label>
                                     <input type="text" class="form-control form-control-sm" name="otros" id="otros">

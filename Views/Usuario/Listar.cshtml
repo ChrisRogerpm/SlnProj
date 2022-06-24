@@ -1,0 +1,115 @@
+﻿
+@{
+    ViewBag.Title = "Listar";
+}
+
+@section header{
+    <div class="page-header page-header-light">
+        <div class="page-header-content header-elements-md-inline">
+            <div class="page-title d-flex">
+                <h4>
+                    <span class="font-weight-semibold"> USUARIOS REGISTRADOS</span>
+                </h4>
+                <a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
+            </div>
+            <div class="header-elements d-none">
+                <div class="d-flex justify-content-center">
+                    <button type="button" class="btn btn-link btn-float text-default" id="btnNuevo">
+                        <i class="icon-floppy-disk text-slate-700"></i><span>NUEVO USUARIO</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
+            <div class="d-flex">
+                <div class="breadcrumb">
+                    <a href="#" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> INICIO</a>
+                    <a href="#" class="breadcrumb-item"> USUARIOS REGISTRADOS</a>
+                </div>
+                <a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
+            </div>
+
+        </div>
+    </div>
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <table id="table" class="table table-bordered table-sm table-striped" style="width:100%"></table>
+            </div>
+        </div>
+    </div>
+    <div id="ModalUsuario" class="modal fade" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="icon-menu7 mr-2"></i> &nbsp;EXPEDIENTE</h5>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form id="frmUsuario" autocomplete="off">
+                        <div class="row">
+                            <input type="hidden" id="id" name="id">
+                            <div class="col-lg-12">
+                                <legend class="text-uppercase font-size-sm font-weight-bold">
+                                    DETALLES DE USUARIO
+                                </legend>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label for=""><b><i class="icon-calendar mr-1"></i>TIPO DE USUARIO:</b></label>
+                                    <div class="input-group input-group-sm">
+                                        <div class="input-group input-group-sm">
+                                            <select id="idTipoUsuario" name="idTipoUsuario" class="form-control"
+                                                    data-container-css-class="select-sm">
+                                                <option value="1">ANAR</option>
+                                                <option value="2">UNIDAD</option>
+                                                <option value="3">ADMINISTRADOR</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label for=""><b>NOMBRE COMPLETO:</b></label>
+                                    <input type="text" class="form-control form-control-sm" name="nombreCompleto"
+                                           id="nombreCompleto">
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label for=""><b>USUARIO:</b></label>
+                                    <input type="text" class="form-control form-control-sm" name="usuario"
+                                           id="usuario">
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label for=""><b>PASSWORD:</b></label>
+                                    <input type="password" class="form-control form-control-sm" name="password"
+                                           id="password">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn bg-warning-300" data-dismiss="modal">
+                        <i class="icon-close2 font-size-base mr-1"></i> CERRAR
+                    </button>
+                    <button class="btn bg-dark" id="btnGuardarUsuario">
+                        <i class="icon-checkmark-circle2 font-size-base mr-1"></i> GUARDAR
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section js{
+    <script src="~/styles/js/Usuario/Listar.js"></script>
+}

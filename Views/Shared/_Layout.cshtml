@@ -87,21 +87,33 @@
 
         <div class="navbar-collapse collapse" id="navbar-demo2-mobile">
             <ul class="nav navbar-nav">
-                <li class="nav-item">
-                    <a href="~/Documento/Expediente" class="navbar-nav-link"><i class="icon-git-branch mr-2"></i> EXPEDIENTES</a>
-                </li>
-                <li class="nav-item">
-                    <a href="~/Documento/ExpedienteDerivar" class="navbar-nav-link">
-                        <i class="icon-git-merge mr-2"></i>
-                        DERIVACIÓN EXPEDIENTES
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="~/Resolucion/Registrar" class="navbar-nav-link"><i class="icon-git-pull-request mr-2"></i> RESOLUCIONES</a>
-                </li>
-                <li class="nav-item">
-                    <a href="~/Resolucion/Consultar" class="navbar-nav-link"><i class="icon-git-pull-request mr-2"></i>CONSULTAR RESOLUCIONES</a>
-                </li>
+                @switch (obj.idTipoUsuario)
+                {
+                    case 1:
+                        <li class="nav-item">
+                            <a href="~/Documento/Expediente" class="navbar-nav-link"><i class="icon-git-branch mr-2"></i> EXPEDIENTES</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="~/Resolucion/Registrar" class="navbar-nav-link"><i class="icon-git-pull-request mr-2"></i> RESOLUCIONES</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="~/Documento/ExpedienteDerivar" class="navbar-nav-link"><i class="icon-git-merge mr-2"></i>DERIVACIÓN EXPEDIENTES</a>
+                        </li>
+                        break;
+                    case 2:
+                        <li class="nav-item">
+                            <a href="~/Documento/Expediente" class="navbar-nav-link"><i class="icon-git-branch mr-2"></i> EXPEDIENTES</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="~/Resolucion/Consultar" class="navbar-nav-link"><i class="icon-git-pull-request mr-2"></i>CONSULTAR RESOLUCIONES</a>
+                        </li>
+                        break;
+                    case 3:
+                        <li class="nav-item">
+                            <a href="~/Usuario/Listar" class="navbar-nav-link"><i class="icon-user-plus mr-2"></i>USUARIOS</a>
+                        </li>
+                        break;
+                }
             </ul>
         </div>
     </div>
@@ -138,7 +150,7 @@
     <script src="~/styles/assets/plugins/cropper/cropper.min.js"></script>
     <script src="~/styles/assets/plugins/toastr/toastr.min.js"></script>
     <script src="~/styles/assets/plugins/AutoComplete/jquery-ui.js"></script>
-    <script src="~/styles/assets/plugins/loadingoverlay/loadingoverlay.min.js"></script>   
+    <script src="~/styles/assets/plugins/loadingoverlay/loadingoverlay.min.js"></script>
     <script src="~/styles/assets/plugins/icheck/icheck.min.js"></script>
     <script src="~/styles/assets/js/app.js"></script>
     <script src="~/styles/global_assets/js/main/axios.min.js"></script>

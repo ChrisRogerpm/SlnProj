@@ -1,5 +1,5 @@
 ﻿const Documento = function () {
-    const eventos = () => {       
+    const eventos = () => {
         $(document).on('click', '#btnModalExpediente', function () {
             LimpiarFormulario({
                 formulario: "#frmExpediente"
@@ -71,8 +71,12 @@
                 });
             }
         })
+        $(document).on('click', '#btnBuscar', function () {
+            ListarDocumentos();
+        })
     }
     const IniciarLibrerias = () => {
+        $("#CbAnios").select2();
         $('.Fecha').daterangepicker({
             singleDatePicker: true,
             locale: {
@@ -134,7 +138,7 @@
         var opciones = $.extend({}, defaults, obj);
         CargarTablaDatatable({
             uniform: true,
-            ajaxUrl: "Documento/ExpedienteListarJson",
+            ajaxUrl: "Documento/DocumentoFiltroListarJson",
             table: "#table",
             tableOrdering: false,
             ajaxDataSend: opciones.data,
@@ -152,7 +156,13 @@
                     title: "OPCIONES",
                     class: "text-center",
                     "render": function (value) {
-                        return `<button class="btn bg-success btn-xs btnEditar" data-popup="tooltip" title="Editar" data-placement="top" data-id="${value.id}"><i class="icon icon-pencil"></i></button>`;
+                        if (customData.idTipoUsuario === 2) {
+                            return `<button class="btn bg-success btn-xs btnEditar" data-popup="tooltip" title="Editar" data-placement="top" data-id="${value.id}"><i class="icon icon-pencil"></i></button>`;
+                        }
+                        else {
+                            return ''
+                        }
+
 
                     }
                 },

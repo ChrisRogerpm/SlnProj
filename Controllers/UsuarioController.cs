@@ -15,6 +15,74 @@ namespace Project.Controllers
         {
             return View();
         }
+        public ActionResult Listar()
+        {
+            return View();
+        }
+        [HttpGet]
+        public ActionResult UsuarioDetalleJson(int id)
+        {
+            string mensaje = "";
+            var data = new Usuario();
+            try
+            {
+                data = objUsuario.UsuarioDetalle(id);
+            }
+            catch (Exception ex)
+            {
+                mensaje = ex.Message;
+            }
+            return Json(new { data, mensaje }, JsonRequestBehavior.AllowGet);
+        }
+        [HttpGet]
+        public ActionResult UsuarioListarJson()
+        {
+            string mensaje = "";
+            var data = new List<Usuario>();
+            try
+            {
+                data = objUsuario.UsuarioListar();
+            }
+            catch (Exception ex)
+            {
+                mensaje = ex.Message;
+            }
+            return Json(new { data, mensaje }, JsonRequestBehavior.AllowGet);
+        }
+        [HttpPost]
+        public ActionResult UsuarioRegistrarJson(Usuario obj)
+        {
+            bool respuesta = false;
+            string mensaje;
+            try
+            {
+                objUsuario.UsuarioRegistrar(obj);
+                respuesta = true;
+                mensaje = "Se ha registrado exitosamente";
+            }
+            catch (Exception ex)
+            {
+                mensaje = ex.Message;
+            }
+            return Json(new { respuesta, mensaje });
+        }
+        [HttpPost]
+        public ActionResult UsuarioEditarJson(Usuario obj)
+        {
+            bool respuesta = false;
+            string mensaje;
+            try
+            {
+                objUsuario.UsuarioEditar(obj);
+                respuesta = true;
+                mensaje = "Se ha editado exitosamente";
+            }
+            catch (Exception ex)
+            {
+                mensaje = ex.Message;
+            }
+            return Json(new { respuesta, mensaje });
+        }
         [HttpPost]
         public ActionResult ValidarLoginJson(Usuario obj)
         {
