@@ -129,7 +129,7 @@ namespace Project.Models
                             {
                                 Documento objDocumento = new Documento
                                 {
-                                    id = Utilitarios.ValidarInteger(dr["id"]),                                    
+                                    id = Utilitarios.ValidarInteger(dr["id"]),
                                     nroExpediente = Utilitarios.ValidarStr(dr["nroExpediente"]),
                                     nombre = Utilitarios.ValidarStr(dr["nombre"]),
                                     apellido = Utilitarios.ValidarStr(dr["apellido"]),
@@ -181,7 +181,7 @@ namespace Project.Models
                                 YEAR(d.fecha) = @p0 AND 
                                 d.nroExpediente like " + "'%" + nroExpediente + "%' " +
                                 "d.id not in (select dr.idDocumento from derivacion as dr group by dr.idDocumento)";
-;
+            ;
 
             try
             {
@@ -299,7 +299,65 @@ namespace Project.Models
             }
             return obj;
         }
+        public Documento DocumentoExpedienteDetalle(string nroExpediente, string anio)
+        {
+            Documento obj = new Documento();
+            string consulta = @"select 
+                                top 1
+                                d.*,
+                                u.nombreCompleto 
+                                from documento as d 
+                                inner join usuario as u on u.id = d.idUsuario
+                                where d.nroExpediente = '" + nroExpediente + "' and year(d.fecha) = " + anio;
+            try
+            {
+                using (var con = new SqlConnection(_conexion))
+                {
+                    con.Open();
+                    var query = new SqlCommand(consulta, con);
+                    using (var dr = query.ExecuteReader())
+                    {
+                        if (dr.HasRows)
+                        {
+                            while (dr.Read())
+                            {
+                                obj.id = Utilitarios.ValidarInteger(dr["id"]);
+                                obj.nombreUsuario = Utilitarios.ValidarStr(dr["nombreCompleto"]);
+                                obj.nroExpediente = Utilitarios.ValidarStr(dr["nroExpediente"]);
+                                obj.nombre = Utilitarios.ValidarStr(dr["nombre"]);
+                                obj.apellido = Utilitarios.ValidarStr(dr["apellido"]);
+                                obj.codigoModular = Utilitarios.ValidarStr(dr["codigoModular"]);
+                                obj.motivo = Utilitarios.ValidarStr(dr["motivo"]);
+                                obj.observacion = Utilitarios.ValidarStr(dr["observacion"]);
+                                obj.fecha = Utilitarios.ValidarDate(dr["fecha"]).ToShortDateString();
+                                obj.dni = Utilitarios.ValidarStr(dr["dni"]);
+                                obj.tituloProfesional = Utilitarios.ValidarStr(dr["tituloProfesional"]);
+                                obj.especialidad = Utilitarios.ValidarStr(dr["especialidad"]);
+                                obj.establecimiento = Utilitarios.ValidarStr(dr["establecimiento"]);
+                                obj.nivelMagisterial = Utilitarios.ValidarStr(dr["nivelMagisterial"]);
+                                obj.jornadaLaboral = Utilitarios.ValidarStr(dr["jornadaLaboral"]);
+                                obj.regimenPension = Utilitarios.ValidarStr(dr["regimenPension"]);
+                                obj.nroIpss = Utilitarios.ValidarStr(dr["nroIpss"]);
+                                obj.fechaIngreso = Utilitarios.ValidarDate(dr["fechaIngreso"]).ToShortDateString();
+                                obj.fechaCese = Utilitarios.ValidarDate(dr["fechaCese"]).ToShortDateString();
+                                obj.codigoEscalafon = Utilitarios.ValidarStr(dr["codigoEscalafon"]);
+                                obj.anios = Utilitarios.ValidarInteger(dr["anios"]);
+                                obj.meses = Utilitarios.ValidarInteger(dr["meses"]);
+                                obj.dias = Utilitarios.ValidarInteger(dr["dias"]);
+                                obj.cargo = Utilitarios.ValidarStr(dr["cargo"]);
+                                obj.tipoServidor = Utilitarios.ValidarStr(dr["tipoServidor"]);
+                                obj.otros = Utilitarios.ValidarStr(dr["otros"]);
+                            }
+                        }
+                    }
 
+                }
+            }
+            catch (Exception ex)
+            {
+            }
+            return obj;
+        }
         public bool DocumentoRegistrar(Documento objDetalle)
         {
             bool respuesta = false;
@@ -386,7 +444,7 @@ namespace Project.Models
                     query.Parameters.AddWithValue("@p21", Utilitarios.ValidarStr(objDetalle.cargo));
                     query.Parameters.AddWithValue("@p22", Utilitarios.ValidarStr(objDetalle.tipoServidor));
                     query.Parameters.AddWithValue("@p23", Utilitarios.ValidarStr(objDetalle.otros));
-                    query.Parameters.AddWithValue("@p24", Utilitarios.ValidarInteger(objDetalle.idUsuario));                    
+                    query.Parameters.AddWithValue("@p24", Utilitarios.ValidarInteger(objDetalle.idUsuario));
                     query.ExecuteNonQuery();
                     respuesta = true;
                 }

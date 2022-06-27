@@ -1,0 +1,167 @@
+﻿@using Project.Models
+@{
+    Usuario obj = (Usuario)Session["UsuarioFull"];
+}
+
+@section header{
+    <div class="page-header page-header-light">
+        <div class="page-header-content header-elements-md-inline">
+            <div class="page-title d-flex">
+                <h4>
+                    <span class="font-weight-semibold"> CONSULTAR EXPEDIENTES</span>
+                </h4>
+                <a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
+            </div>
+            <div class="header-elements d-none">
+                <div class="d-flex justify-content-center">
+                    <button type="button" class="btn btn-link btn-float text-default" id="btnBuscar">
+                        <i class="icon-search4 text-slate-700"></i><span>BUSCAR</span>
+                    </button>
+                    <button type="button" class="btn btn-link btn-float text-default" id="btnRelaciones">
+                        <i class="icon-file-empty text-slate-700"></i><span>VER RELACIONES</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
+            <div class="d-flex">
+                <div class="breadcrumb">
+                    <a href="#" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> INICIO</a>
+                    <a href="#" class="breadcrumb-item"> CONSULTAR EXPEDIENTES</a>
+                </div>
+                <a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
+            </div>
+
+        </div>
+    </div>
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <form id="frmFiltro" autocomplete="off">
+                    <div class="row">
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                <label for=""><b><i class="icon-calendar mr-1"></i>NRO DE EXPEDIENTE:</b></label>
+                                <div class="input-group input-group-sm">
+                                    <div class="input-group input-group-sm">
+                                        <input type="text" class="form-control form-control-sm" id="nroExpedienteFilter"
+                                               name="nroExpediente">
+                                        <span class="input-group-append">
+                                            <button class="btn btn-light" type="button">
+                                                <i class="icon-user"></i>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                <label for=""><b><i class="icon-calendar mr-1"></i>AÑO:</b></label>
+                                <div class="input-group input-group-sm">
+                                    <div class="input-group input-group-sm">
+                                        <select id="CbAnios" name="anio" class="form-control"
+                                                data-container-css-class="select-sm">
+                                            @{
+                                                for (int i = 2010; i < 2050; i++)
+                                                {
+                                                    <option value="@i">@i</option>
+                                                }
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-2">
+                        <div class="form-group">
+                            <label for=""><b>NRO EXPEDIENTE:</b></label>
+                            <input type="text" class="form-control form-control-sm" id="nroExpediente" readonly>
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="form-group">
+                            <label for=""><b>FECHA DE REGISTRO:</b></label>
+                            <input type="text" class="form-control form-control-sm" id="fechaRegistro" readonly>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label for=""><b>NOMBRE Y APELLIDOS:</b></label>
+                            <input type="text" class="form-control form-control-sm" id="nombreApellido" readonly>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label for=""><b>CÓDIGO MODULAR:</b></label>
+                            <input type="text" class="form-control form-control-sm" id="codigoModular" readonly>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label for=""><b>MOTIVO:</b></label>
+                            <input type="text" class="form-control form-control-sm" id="motivo" readonly>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label for=""><b>ESTABLECIMIENTO:</b></label>
+                            <input type="text" class="form-control form-control-sm" id="establecimiento" readonly>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label for=""><b>OBSERVACIÓN:</b></label>
+                            <input type="text" class="form-control form-control-sm" id="observacion" readonly>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12" id="timeline-contain" style="display:none">
+        <div class="card">
+            <div class="card-body">
+                <div class="row" id="container-timeline">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="ModalRelaciones" class="modal fade" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="icon-menu7 mr-2"></i> &nbsp;EXPEDIENTE</h5>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="row" id="contain-relations">
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn bg-warning-300" data-dismiss="modal">
+                        <i class="icon-close2 font-size-base mr-1"></i> CERRAR
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section js{
+    <script src="~/styles/js/Documento/DocumentoConsultar.js"></script>
+}

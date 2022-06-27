@@ -2,16 +2,19 @@
 @{
     int id = 0;
     string NombreUsuario = "";
+    string tipoUsuarioNombre = "";
     Usuario obj = (Usuario)Session["UsuarioFull"];
 
     if (obj == null)
     {
         Response.Redirect("~/");
+        return;
     }
     else
     {
         id = obj.id;
         NombreUsuario = obj.nombreCompleto;
+        tipoUsuarioNombre = obj.tipoUsuarioNombre;
     }
 }
 <!DOCTYPE html>
@@ -64,7 +67,7 @@
                 <li class="nav-item dropdown dropdown-user">
                     <a href="#" class="navbar-nav-link d-flex align-items-center dropdown-toggle" data-toggle="dropdown">
                         <img src="~/styles/assets/image/default.jpg" class="rounded-circle mr-2" height="34" alt="">
-                        <span>@NombreUsuario</span>
+                        <span>@NombreUsuario - Usuario : @tipoUsuarioNombre.ToUpper()</span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right">
                         <a href="#" class="dropdown-item" id="btnCerrarSesion">
@@ -91,18 +94,24 @@
                 {
                     case 1:
                         <li class="nav-item">
-                            <a href="~/Documento/Expediente" class="navbar-nav-link"><i class="icon-git-branch mr-2"></i> EXPEDIENTES</a>
+                            <a href="~/Documento/Consultar" class="navbar-nav-link"><i class="icon-git-branch mr-2"></i> CONSULTAR EXPEDIENTES</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="~/Documento/ExpedienteDerivar" class="navbar-nav-link"><i class="icon-git-merge mr-2"></i>DERIVACIÓN EXPEDIENTES</a>
                         </li>
                         <li class="nav-item">
                             <a href="~/Resolucion/Registrar" class="navbar-nav-link"><i class="icon-git-pull-request mr-2"></i> RESOLUCIONES</a>
                         </li>
                         <li class="nav-item">
-                            <a href="~/Documento/ExpedienteDerivar" class="navbar-nav-link"><i class="icon-git-merge mr-2"></i>DERIVACIÓN EXPEDIENTES</a>
+                            <a href="~/Resolucion/Consultar" class="navbar-nav-link"><i class="icon-git-pull-request mr-2"></i>CONSULTAR RESOLUCIONES</a>
                         </li>
                         break;
                     case 2:
                         <li class="nav-item">
                             <a href="~/Documento/Expediente" class="navbar-nav-link"><i class="icon-git-branch mr-2"></i> EXPEDIENTES</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="~/Documento/Consultar" class="navbar-nav-link"><i class="icon-git-branch mr-2"></i> CONSULTAR EXPEDIENTES</a>
                         </li>
                         <li class="nav-item">
                             <a href="~/Resolucion/Consultar" class="navbar-nav-link"><i class="icon-git-pull-request mr-2"></i>CONSULTAR RESOLUCIONES</a>

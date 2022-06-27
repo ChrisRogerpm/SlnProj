@@ -905,7 +905,8 @@ function CargarDataGET(obj) {
         params: options.dataForm
     }).then(function (response) {
         var data = response.data.data;
-        options.callBackSuccess(data);
+        var dataAll = response.data;
+        options.callBackSuccess(data,dataAll);
     }).finally(function () {
         if (options.loader) {
             $.LoadingOverlay("hide");
@@ -930,7 +931,7 @@ $(document).on('click', '#btnCerrarSesion', function () {
         data: [],
         showMessag:false,
         callBackSuccess: function () {
-            RefrescarVentana();
+            RedirigirUrl("");
         }
     })
 });

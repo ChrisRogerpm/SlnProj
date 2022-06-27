@@ -109,8 +109,6 @@
     <Content Include="styles\assets\image\logo_mini.png" />
     <Content Include="styles\assets\image\subetulogo.jpg" />
     <Content Include="styles\assets\js\app.js" />
-    <Content Include="styles\assets\js\Autenticacion\CambiarContrasenia.js" />
-    <Content Include="styles\assets\js\Autenticacion\Login.js" />
     <Content Include="styles\assets\js\Metodos\General.js" />
     <Content Include="styles\assets\plugins\Autocomplete\jquery-ui.css" />
     <Content Include="styles\assets\plugins\Autocomplete\jquery-ui.js" />
@@ -815,6 +813,7 @@
     <Content Include="styles\global_assets\js\plugins\visualization\dimple\dimple.min.js" />
     <Content Include="styles\global_assets\js\plugins\visualization\echarts\echarts.min.js" />
     <Content Include="styles\js\Autenticacion\Login.js" />
+    <Content Include="styles\js\Documento\DocumentoConsultar.js" />
     <Content Include="styles\js\Documento\DocumentoDerivar.js" />
     <Content Include="styles\js\Documento\DocumentoListar.js" />
     <Content Include="styles\js\Resolucion\ResolucionConsultar.js" />
@@ -910,6 +909,7 @@
     <Content Include="Views\Resolucion\Registrar.cshtml" />
     <Content Include="Views\Resolucion\Consultar.cshtml" />
     <Content Include="Views\Usuario\Listar.cshtml" />
+    <Content Include="Views\Documento\Consultar.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

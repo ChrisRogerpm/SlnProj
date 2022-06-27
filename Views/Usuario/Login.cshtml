@@ -6,9 +6,20 @@
 @using Project.Models
 @{
     Usuario obj = (Usuario)Session["UsuarioFull"];
-    if (obj !=null)
+    if (obj != null)
     {
-        Response.Redirect("~/Documento/Expediente");
+        switch (obj.idTipoUsuario)
+        {
+            case 1:
+                Response.Redirect("~/Documento/Consultar");
+                break;
+            case 2:
+                Response.Redirect("~/Documento/Expediente");
+                break;
+            case 3:
+                Response.Redirect("~/Usuario/Listar");
+                break;
+        }
     }
 }
 

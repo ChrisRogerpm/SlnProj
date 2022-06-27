@@ -87,17 +87,25 @@ namespace Project.Controllers
         public ActionResult ValidarLoginJson(Usuario obj)
         {
             bool respuesta = false;
-            string mensaje;
+            string mensaje = "";
+            var data = new Usuario();
             try
             {
-                Usuario objUsu = objUsuario.ValidarLogin(obj);
-                if (objUsu.id != 0)
+                data = objUsuario.ValidarLogin(obj);
+                if (data.id != 0)
                 {
-                    Session["id"] = objUsu.id;
-                    Session["nombreCompleto"] = objUsu.nombreCompleto;
-                    Session["UsuarioFull"] = objUsu;
-                    respuesta = true;
-                    mensaje = "Bienvenido(a)";
+                    if (data.estado == 0)
+                    {
+                        mensaje = "El usuario ha sido deshabilitado";
+                    }
+                    else
+                    {
+                        Session["id"] = data.id;
+                        Session["nombreCompleto"] = data.nombreCompleto;
+                        Session["UsuarioFull"] = data;
+                        respuesta = true;
+                        mensaje = "Bienvenido(a) al sistema";
+                    }
                 }
                 else
                 {
@@ -109,7 +117,7 @@ namespace Project.Controllers
             {
                 mensaje = ex.Message;
             }
-            return Json(new { respuesta, mensaje });
+            return Json(new { respuesta, mensaje, data });
         }
         [HttpPost]
         public ActionResult CerrarSesionLoginJson()
@@ -122,6 +130,23 @@ namespace Project.Controllers
                 Session["nombreCompleto"] = null;
                 Session["UsuarioFull"] = null;
                 respuesta = true;
+            }
+            catch (Exception exp)
+            {
+                mensaje = exp.Message + " ,Llame Administrador";
+            }
+            return Json(new { respuesta, mensaje });
+        }
+        [HttpPost]
+        public ActionResult UsuarioCambiarEstadoJson(Usuario obj)
+        {
+            string mensaje = "";
+            bool respuesta = false;
+            try
+            {
+                objUsuario.UsuarioCambiarEstado(obj);
+                respuesta = true;
+                mensaje = "Se ha actualizado el estado exitosamente";
             }
             catch (Exception exp)
             {

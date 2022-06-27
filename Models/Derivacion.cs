@@ -18,6 +18,7 @@ namespace Project.Models
         public string documentoEmitido { get; set; }
         public string comentario { get; set; }
         public int estadoExpediente { get; set; }
+        public string estadoExpedienteNombre { get; set; }
         public List<int> ListaidTipoDerivacion { get; set; }
         public string nroDerivacion { get; set; }
         public string codigoEscalafon { get; set; }
@@ -25,6 +26,10 @@ namespace Project.Models
         public string motivo { get; set; }
         public string establecimiento { get; set; }
         public string observacion { get; set; }
+        public string nroExpediente { get; set; }
+        public string creadorPor { get; set; }
+        public string derivadoA { get; set; }
+        public string fechaCreacion { get; set; }
 
         string _conexion = string.Empty;
 
@@ -123,6 +128,61 @@ namespace Project.Models
             {
             }
             return obj;
+        }
+        public List<Derivacion> ListaHistorialDerivacion(int id)
+        {
+            List<Derivacion> list = new List<Derivacion>();
+            string consulta = @"select 
+                            dc.nroExpediente,
+                            u.nombreCompleto AS creadorPor,
+                            tp.nombre as derivadoA,
+                            d.comentario,
+                            dc.fecha as fechaCreacion,
+                            d.fechaDerivacion,
+                            CASE
+                                WHEN d.estadoExpediente = 1 THEN 'ACEPTADO'
+                                WHEN d.estadoExpediente = 0 THEN 'DEVUELTO'	
+                            ELSE '--'
+                            END AS estadoExpediente
+                            from derivacion as d
+                            inner join documento as dc on dc.id = d.idDocumento
+                            inner join usuario as u on u.id = dc.idUsuario
+                            inner join tipoderivacion as tp on tp.id = d.idTipoDerivacion
+                            where d.idDocumento = " + id;
+            try
+            {
+                using (var con = new SqlConnection(_conexion))
+                {
+                    con.Open();
+                    var query = new SqlCommand(consulta, con);
+                    using (var dr = query.ExecuteReader())
+                    {
+                        if (dr.HasRows)
+                        {
+                            while (dr.Read())
+                            {
+                                Derivacion objDerivacion = new Derivacion
+                                {
+                                    nroExpediente = Utilitarios.ValidarStr(dr["nroExpediente"]),
+                                    creadorPor = Utilitarios.ValidarStr(dr["creadorPor"]),
+                                    derivadoA = Utilitarios.ValidarStr(dr["derivadoA"]),
+                                    comentario = Utilitarios.ValidarStr(dr["comentario"]),
+                                    fechaCreacion = Utilitarios.ValidarDate(dr["fechaCreacion"]).ToShortDateString(),
+                                    fechaDerivacion = Utilitarios.ValidarDate(dr["fechaDerivacion"]).ToShortDateString(),
+                                    estadoExpedienteNombre = Utilitarios.ValidarStr(dr["estadoExpediente"]),
+                                };
+                                list.Add(objDerivacion);
+                            }
+                        }
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+            }
+
+            return list;
         }
     }
 }

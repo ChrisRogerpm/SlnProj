@@ -28,7 +28,24 @@ namespace Project.Models
         public Usuario ValidarLogin(Usuario obj)
         {
             Usuario objUsu = new Usuario();
-            string consulta = @"SELECT * FROM usuario AS u WHERE u.usuario = @p0 AND u.password = @p1";
+            string consulta = @"SELECT
+                                u.id,
+                                u.idTipoUsuario,
+                                CASE
+                                    WHEN u.idTipoUsuario = 1 THEN 'Anar'
+                                    WHEN u.idTipoUsuario = 2 THEN 'Unidad'
+	                                WHEN u.idTipoUsuario = 3 THEN 'Administrador'
+                                    ELSE '--'
+                                END AS tipoUsuarioNombre,
+                                u.nombreCompleto,
+                                u.usuario,                                
+                                u.estado AS idEstado,
+                                CASE
+                                WHEN u.estado = 1 THEN 'Activo'
+                                WHEN u.estado = 0 THEN 'Inactivo'
+                                ELSE '--'
+                                END AS estado
+                                FROM usuario AS u WHERE u.usuario = @p0 AND u.password = @p1";
             try
             {
                 using (var con = new SqlConnection(_conexion))
@@ -46,6 +63,8 @@ namespace Project.Models
                                 objUsu.id = Utilitarios.ValidarInteger(dr["id"]);
                                 objUsu.nombreCompleto = Utilitarios.ValidarStr(dr["nombreCompleto"]);
                                 objUsu.idTipoUsuario = Utilitarios.ValidarInteger(dr["idTipoUsuario"]);
+                                objUsu.tipoUsuarioNombre = Utilitarios.ValidarStr(dr["tipoUsuarioNombre"]);
+                                objUsu.estado = Utilitarios.ValidarInteger(dr["idEstado"]);
                             }
                         }
                     }
@@ -115,8 +134,33 @@ namespace Project.Models
                     query.Parameters.AddWithValue("@p0", Utilitarios.ValidarInteger(obj.idTipoUsuario));
                     query.Parameters.AddWithValue("@p1", Utilitarios.ValidarStr(obj.nombreCompleto));
                     query.Parameters.AddWithValue("@p2", Utilitarios.ValidarStr(obj.usuario));
-                    query.Parameters.AddWithValue("@p3", Utilitarios.ValidarStr(obj.password));                    
+                    query.Parameters.AddWithValue("@p3", Utilitarios.ValidarStr(obj.password));
                     query.Parameters.AddWithValue("@p5", Utilitarios.ValidarInteger(obj.id));
+                    query.ExecuteNonQuery();
+                    respuesta = true;
+                }
+            }
+            catch (Exception ex)
+            {
+            }
+            return respuesta;
+        }
+        public bool UsuarioCambiarEstado(Usuario obj)
+        {
+            bool respuesta = false;
+
+            string consulta = @"UPDATE usuario
+                                SET
+                                estado = @p0                              
+                                WHERE id = @p1";
+            try
+            {
+                using (var con = new SqlConnection(_conexion))
+                {
+                    con.Open();
+                    var query = new SqlCommand(consulta, con);
+                    query.Parameters.AddWithValue("@p0", Utilitarios.ValidarInteger(obj.estado));
+                    query.Parameters.AddWithValue("@p1", Utilitarios.ValidarStr(obj.id));
                     query.ExecuteNonQuery();
                     respuesta = true;
                 }
@@ -144,7 +188,8 @@ namespace Project.Models
                                 WHEN u.estado = 1 THEN 'Activo'
                                 WHEN u.estado= 0 THEN 'Inactivo'
                                 ELSE '--'
-                                END AS estado
+                                END AS estado,
+                                u.estado AS idestado
                                 from usuario as u";
 
             try
@@ -167,6 +212,7 @@ namespace Project.Models
                                     nombreCompleto = Utilitarios.ValidarStr(dr["nombreCompleto"]),
                                     usuario = Utilitarios.ValidarStr(dr["usuario"]),
                                     estadoNombre = Utilitarios.ValidarStr(dr["estado"]),
+                                    estado = Utilitarios.ValidarInteger(dr["idestado"])
                                 };
                                 list.Add(objUsuario);
                             }

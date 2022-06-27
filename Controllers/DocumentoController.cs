@@ -16,10 +16,14 @@ namespace Project.Controllers
         {
             return View();
         }
+        public ActionResult Consultar()
+        {
+            return View();
+        }
         public ActionResult ExpedienteDerivar()
         {
             return View();
-        }        
+        }
         [HttpGet]
         public ActionResult ExpedienteListarJson()
         {
@@ -42,7 +46,7 @@ namespace Project.Controllers
             var data = new List<Documento>();
             try
             {
-                data = objDocumento.DocumentoFiltroListar(nroExpediente,anio);
+                data = objDocumento.DocumentoFiltroListar(nroExpediente, anio);
             }
             catch (Exception ex)
             {
@@ -57,7 +61,7 @@ namespace Project.Controllers
             var data = new List<Documento>();
             try
             {
-                data = objDocumento.DocumentoDerivadoListar(nroExpediente,anio);
+                data = objDocumento.DocumentoDerivadoListar(nroExpediente, anio);
             }
             catch (Exception ex)
             {
@@ -73,6 +77,21 @@ namespace Project.Controllers
             try
             {
                 data = objDocumento.DocumentoDetalle(id);
+            }
+            catch (Exception ex)
+            {
+                mensaje = ex.Message;
+            }
+            return Json(new { data, mensaje }, JsonRequestBehavior.AllowGet);
+        }
+        [HttpGet]
+        public ActionResult DocumentoExpedienteDetalleJson(string nroExpediente, string anio)
+        {
+            string mensaje = "";
+            var data = new Documento();
+            try
+            {
+                data = objDocumento.DocumentoExpedienteDetalle(nroExpediente, anio);
             }
             catch (Exception ex)
             {

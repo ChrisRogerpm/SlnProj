@@ -13,7 +13,7 @@
         };
         let opciones = $.extend({}, defaults, obj);
         $("#frmLogin").submit();
-        if (_objetoForm_frmLogin.valid()) {            
+        if (_objetoForm_frmLogin.valid()) {
             EnviarDataPost({
                 url: "Usuario/ValidarLoginJson",
                 data: opciones.data,
@@ -23,7 +23,7 @@
                     }, 1000)
                 }
             });
-        }        
+        }
     }
     const IniciarLibrerias = () => {
     }
@@ -44,7 +44,7 @@
     return {
         init: function () {
             IniciarLibrerias();
-            Eventos();            
+            Eventos();
             ValidarCampos();
         }
     }

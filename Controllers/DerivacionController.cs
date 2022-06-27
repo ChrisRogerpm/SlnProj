@@ -11,6 +11,7 @@ namespace Project.Controllers
     {
         // GET: Derivacion
         Derivacion objDerivacion = new Derivacion();
+        Documento objDocumento = new Documento();
         public ActionResult Index()
         {
             return View();
@@ -40,16 +41,18 @@ namespace Project.Controllers
         public ActionResult DerivacionDetalleJson(string nroExpediente, string anio)
         {
             string mensaje = "";
-            var data = new Derivacion();
+            var data = new Documento();
+            var listaDerivacion = new List<Derivacion>();
             try
             {
-                data = objDerivacion.DerivacionDetalle(nroExpediente, anio);
+                data = objDocumento.DocumentoExpedienteDetalle(nroExpediente, anio);
+                listaDerivacion = objDerivacion.ListaHistorialDerivacion(data.id);
             }
             catch (Exception ex)
             {
                 mensaje = ex.Message;
             }
-            return Json(new { data, mensaje }, JsonRequestBehavior.AllowGet);
+            return Json(new { data = data, listaDerivacion = listaDerivacion, mensaje = mensaje }, JsonRequestBehavior.AllowGet);
         }
 
 
