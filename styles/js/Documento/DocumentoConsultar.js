@@ -78,7 +78,7 @@ const Documento = function () {
         };
         let opciones = $.extend({}, defaults, obj);
         CargarDataGET({
-            url: "Derivacion/DerivacionDetalleJson",
+            url: "Documento/DocumentoExpedienteDetalleJson",
             dataForm: opciones.data,
             callBackSuccess: function (data, dataAll) {
                 if (data.id !== 0) {

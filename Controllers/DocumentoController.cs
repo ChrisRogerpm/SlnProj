@@ -11,7 +11,7 @@ namespace Project.Controllers
     {
         // GET: Documento
         Documento objDocumento = new Documento();
-
+        Derivacion objDerivacion = new Derivacion();
         public ActionResult Expediente()
         {
             return View();
@@ -89,15 +89,17 @@ namespace Project.Controllers
         {
             string mensaje = "";
             var data = new Documento();
+            var listaDerivacion = new List<Derivacion>();
             try
             {
                 data = objDocumento.DocumentoExpedienteDetalle(nroExpediente, anio);
+                listaDerivacion = objDerivacion.ListaHistorialDerivacion(data.id);
             }
             catch (Exception ex)
             {
                 mensaje = ex.Message;
             }
-            return Json(new { data, mensaje }, JsonRequestBehavior.AllowGet);
+            return Json(new { data, mensaje, listaDerivacion }, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
         public ActionResult ExpedienteRegistrarJson(Documento obj)

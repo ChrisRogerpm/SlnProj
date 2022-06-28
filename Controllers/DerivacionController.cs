@@ -42,15 +42,17 @@ namespace Project.Controllers
         {
             string mensaje = "";
             var data = new Derivacion();
+            var listaDerivacion = new List<Derivacion>();
             try
             {
                 data = objDerivacion.DerivacionDetalle(nroExpediente, anio);
+                listaDerivacion = objDerivacion.ListaHistorialDerivacion(data.id);
             }
             catch (Exception ex)
             {
                 mensaje = ex.Message;
             }
-            return Json(new { data, mensaje }, JsonRequestBehavior.AllowGet);
+            return Json(new { data, mensaje,listaDerivacion }, JsonRequestBehavior.AllowGet);
         }
 
 
