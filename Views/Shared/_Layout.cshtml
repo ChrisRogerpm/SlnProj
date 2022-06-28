@@ -94,27 +94,30 @@
                 {
                     case 1:
                         <li class="nav-item">
-                            <a href="~/Documento/Consultar" class="navbar-nav-link"><i class="icon-git-branch mr-2"></i> CONSULTAR EXPEDIENTES</a>
+                            @Html.ActionLink("CONSULTAR EXPEDIENTES", "Consultar", "Documento", null, new { @class = "navbar-nav-link" })
                         </li>
                         <li class="nav-item">
-                            <a href="~/Documento/ExpedienteDerivar" class="navbar-nav-link"><i class="icon-git-merge mr-2"></i>DERIVACIÓN EXPEDIENTES</a>
+                            @Html.ActionLink("DERIVACIÓN EXPEDIENTES", "ExpedienteDerivar", "Documento", null, new { @class = "navbar-nav-link" })
                         </li>
                         <li class="nav-item">
-                            <a href="~/Resolucion/Registrar" class="navbar-nav-link"><i class="icon-git-pull-request mr-2"></i> RESOLUCIONES</a>
+                            @Html.ActionLink("RESOLUCIONES", "Registrar", "Resolucion", null, new { @class = "navbar-nav-link" })
                         </li>
                         <li class="nav-item">
-                            <a href="~/Resolucion/Consultar" class="navbar-nav-link"><i class="icon-git-pull-request mr-2"></i>CONSULTAR RESOLUCIONES</a>
+                            @Html.ActionLink("CONSULTAR RESOLUCIONES", "Consultar", "Resolucion", null, new { @class = "navbar-nav-link" })
                         </li>
                         break;
                     case 2:
                         <li class="nav-item">
-                            <a href="~/Documento/Expediente" class="navbar-nav-link"><i class="icon-git-branch mr-2"></i> EXPEDIENTES</a>
+                            @Html.ActionLink("EXPEDIENTES", "Expediente", "Documento", null, new { @class = "navbar-nav-link" })
                         </li>
                         <li class="nav-item">
-                            <a href="~/Documento/Consultar" class="navbar-nav-link"><i class="icon-git-branch mr-2"></i> CONSULTAR EXPEDIENTES</a>
+                            @Html.ActionLink("DERIVACIÓN EXPEDIENTES", "ExpedienteDerivar", "Documento", null, new { @class = "navbar-nav-link" })
                         </li>
                         <li class="nav-item">
-                            <a href="~/Resolucion/Consultar" class="navbar-nav-link"><i class="icon-git-pull-request mr-2"></i>CONSULTAR RESOLUCIONES</a>
+                            @Html.ActionLink("CONSULTAR EXPEDIENTES", "Consultar", "Documento", null, new { @class = "navbar-nav-link" })
+                        </li>
+                        <li class="nav-item">
+                            @Html.ActionLink("CONSULTAR RESOLUCIONES", "Consultar", "Resolucion", null, new { @class = "navbar-nav-link" })
                         </li>
                         break;
                     case 3:

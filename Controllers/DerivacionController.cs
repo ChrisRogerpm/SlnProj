@@ -41,18 +41,16 @@ namespace Project.Controllers
         public ActionResult DerivacionDetalleJson(string nroExpediente, string anio)
         {
             string mensaje = "";
-            var data = new Documento();
-            var listaDerivacion = new List<Derivacion>();
+            var data = new Derivacion();
             try
             {
-                data = objDocumento.DocumentoExpedienteDetalle(nroExpediente, anio);
-                listaDerivacion = objDerivacion.ListaHistorialDerivacion(data.id);
+                data = objDerivacion.DerivacionDetalle(nroExpediente, anio);
             }
             catch (Exception ex)
             {
                 mensaje = ex.Message;
             }
-            return Json(new { data = data, listaDerivacion = listaDerivacion, mensaje = mensaje }, JsonRequestBehavior.AllowGet);
+            return Json(new { data, mensaje }, JsonRequestBehavior.AllowGet);
         }
 
 

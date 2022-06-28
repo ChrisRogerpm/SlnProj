@@ -50,22 +50,25 @@ const Resolucion = function () {
             url: "Derivacion/DerivacionDetalleJson",
             dataForm: $("#frmFiltro").serializeFormJSON(),
             callBackSuccess: function (data) {
-                if (data.nroDerivacion != null) {
-                    ExpedienteSeleccionado = data;
-                    $("#fechaExpediente").val(data.fechaDerivacion)
-                    $("#nroDerivacionExpediente").val(data.nroDerivacion)
-                    $("#codigoEscalafonExpediente").val(data.codigoEscalafon)
-                    $("#nombreApellidoExpediente").val(data.nombreApellido)
-                    $("#motivoExpediente").val(data.motivo)
-                    $("#establecimientoExpediente").val(data.establecimiento)
-                    $("#observacionExpediente").val(data.observacion)
-                } else {
-                    ShowAlert({
-                        type: 'warning',
-                        message: 'No se ha encontrado expediente'
-                    })
-                    ExpedienteSeleccionado = null;
-                }
+                ExpedienteSeleccionado = data;                
+                $("#fechaExpediente").val(data.fechaDerivacion)
+                $("#nroDerivacionExpediente").val(data.nroDerivacion)
+                $("#codigoEscalafonExpediente").val(data.documento.codigoEscalafon)
+                $("#nombreApellidoExpediente").val(data.nombreApellido)
+                $("#motivoExpediente").val(data.documento.motivo)
+                $("#establecimientoExpediente").val(data.documento.establecimiento)
+                $("#observacionExpediente").val(data.documento.observacion)
+
+                $("#motivo").val(data.documento.motivo);
+                $("#dni").val(data.documento.dni);
+                $("#tituloProfesional").val(data.documento.tituloProfesional);
+                $("#especialidad").val(data.documento.especialidad);
+                $("#establecimiento").val(data.documento.establecimiento);
+                $("#nivelMagisterial").val(data.documento.nivelMagisterial);
+                $("#jornadaLaboral").val(data.documento.jornadaLaboral);
+                $("#regimenPension").val(data.documento.regimenPension);
+                $("#nroIpss").val(data.documento.nroIpss);
+                $("#codigoEscalafon").val(data.documento.codigoEscalafon);
 
             }
         });

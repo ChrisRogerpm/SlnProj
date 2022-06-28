@@ -21,15 +21,12 @@ namespace Project.Models
         public string estadoExpedienteNombre { get; set; }
         public List<int> ListaidTipoDerivacion { get; set; }
         public string nroDerivacion { get; set; }
-        public string codigoEscalafon { get; set; }
         public string nombreApellido { get; set; }
-        public string motivo { get; set; }
-        public string establecimiento { get; set; }
-        public string observacion { get; set; }
         public string nroExpediente { get; set; }
         public string creadorPor { get; set; }
         public string derivadoA { get; set; }
         public string fechaCreacion { get; set; }
+        public Documento documento = new Documento();
 
         string _conexion = string.Empty;
 
@@ -88,15 +85,12 @@ namespace Project.Models
                                 top 1
                                 dc.id as idDocumento,
                                 d.fechaDerivacion,
-                                d.id as nroDerivacion,
-                                dc.codigoEscalafon,
+                                d.id as nroDerivacion,                                
                                 CONCAT(dc.nombre,' ',dc.apellido) as nombreApellido,
-                                dc.motivo,
-                                dc.establecimiento,
-                                dc.observacion
+                                dc.*
                                 from derivacion as d
                                 inner join documento as dc on dc.id = d.idDocumento
-                                where dc.nroExpediente = '" + nroExpediente + "' and YEAR(d.fechaDerivacion) = '" + anio + "'";
+                                where dc.nroExpediente like '%" + nroExpediente + "%' and YEAR(dc.fecha) = '" + anio + "'";
             try
             {
                 using (var con = new SqlConnection(_conexion))
@@ -113,11 +107,32 @@ namespace Project.Models
                                 obj.idDocumento = Utilitarios.ValidarInteger(dr["idDocumento"]);
                                 obj.fechaDerivacion = Utilitarios.ValidarDate(dr["fechaDerivacion"]).ToShortDateString();
                                 obj.nroDerivacion = Utilitarios.ValidarStr(dr["nroDerivacion"]);
-                                obj.codigoEscalafon = Utilitarios.ValidarStr(dr["codigoEscalafon"]);
                                 obj.nombreApellido = Utilitarios.ValidarStr(dr["nombreApellido"]);
-                                obj.motivo = Utilitarios.ValidarStr(dr["motivo"]);
-                                obj.establecimiento = Utilitarios.ValidarStr(dr["establecimiento"]);
-                                obj.observacion = Utilitarios.ValidarStr(dr["observacion"]);
+                                obj.documento.id = Utilitarios.ValidarInteger(dr["id"]);                                
+                                obj.documento.nroExpediente = Utilitarios.ValidarStr(dr["nroExpediente"]);
+                                obj.documento.nombre = Utilitarios.ValidarStr(dr["nombre"]);
+                                obj.documento.apellido = Utilitarios.ValidarStr(dr["apellido"]);
+                                obj.documento.codigoModular = Utilitarios.ValidarStr(dr["codigoModular"]);
+                                obj.documento.motivo = Utilitarios.ValidarStr(dr["motivo"]);
+                                obj.documento.observacion = Utilitarios.ValidarStr(dr["observacion"]);
+                                obj.documento.fecha = Utilitarios.ValidarDate(dr["fecha"]).ToShortDateString();
+                                obj.documento.dni = Utilitarios.ValidarStr(dr["dni"]);
+                                obj.documento.tituloProfesional = Utilitarios.ValidarStr(dr["tituloProfesional"]);
+                                obj.documento.especialidad = Utilitarios.ValidarStr(dr["especialidad"]);
+                                obj.documento.establecimiento = Utilitarios.ValidarStr(dr["establecimiento"]);
+                                obj.documento.nivelMagisterial = Utilitarios.ValidarStr(dr["nivelMagisterial"]);
+                                obj.documento.jornadaLaboral = Utilitarios.ValidarStr(dr["jornadaLaboral"]);
+                                obj.documento.regimenPension = Utilitarios.ValidarStr(dr["regimenPension"]);
+                                obj.documento.nroIpss = Utilitarios.ValidarStr(dr["nroIpss"]);
+                                obj.documento.fechaIngreso = Utilitarios.ValidarDate(dr["fechaIngreso"]).ToShortDateString();
+                                obj.documento.fechaCese = Utilitarios.ValidarDate(dr["fechaCese"]).ToShortDateString();
+                                obj.documento.codigoEscalafon = Utilitarios.ValidarStr(dr["codigoEscalafon"]);
+                                obj.documento.anios = Utilitarios.ValidarInteger(dr["anios"]);
+                                obj.documento.meses = Utilitarios.ValidarInteger(dr["meses"]);
+                                obj.documento.dias = Utilitarios.ValidarInteger(dr["dias"]);
+                                obj.documento.cargo = Utilitarios.ValidarStr(dr["cargo"]);
+                                obj.documento.tipoServidor = Utilitarios.ValidarStr(dr["tipoServidor"]);
+                                obj.documento.otros = Utilitarios.ValidarStr(dr["otros"]);
                             }
                         }
                     }
